@@ -18,9 +18,12 @@ as private tags and standard tags that can be more than one VR (e.g. LUT Data)
 
 # Proposal
 
-Compliant archives will provide direct HTTP GET access to the following DICOMweb resources:
+Compliant archives will provide direct access via HTTP GET or the file system to the following DICOMweb resources:
 
-* Study Metadata - in DICOM JSON encoding with VRs included (Explicit format), gzipped.  
+* Study Metadata
+  * DICOM JSON encoding with VRs included (Explicit format)
+  * gzipped
+  * Denormalized data cannot have any inconsistencies (all patient names must be the same)
 * Image Frames - in any supported transfer sytnax, wrapped in multi-part mime header
 * Bulk Data - wrapped in multi-part mime header
 
@@ -29,3 +32,22 @@ on the fly modification of the data (e.g. no transcoding to another transfer syn
 
 An entire study can be archived as a single file by storing all of the above resources in a single ZIP file.  The resources will use file paths
 that match the WADO-RS URIs
+
+NOTE: Semantically equivalent DICOM P10 can be generated from the above resources
+
+# FAQ
+
+### Q: Why don't you also store series and/or sop instance metadata?
+### A: It is unnecessary and could lead to data inconsistencies.  These objects can easily be created from the study metadata, but are unnecessary as part of the archive format
+
+### Q: Why don't you support QIDO-RS responses such as Study Series and Series Instances?
+### A: It is unnecessary and could lead to data inconsistencies.  These objects can easily be created from the study metadata, but are unnecessary as part of the archive format
+
+### Q: Why use ZIP as your study archive format?
+### A: For consistency with the existing ZIP funcionality in DICOMweb
+
+### Q: Why not create a new study metadata format that is actually denormalized
+### A: To minimize the size of this specific standard proposal.  If a denormalized study metadata object is standardized in the future, it should be possible to use it as part of this standard
+
+### Q: What does a semantically equivalent DICOM P10 file mean?
+### A: Parsing the generated DICOM P10 file will return the exact same values, but the actual bits may be different due to variations in DICOM P10 encoding formats (e.g. undefined length sequences).  The details of the encoding mechanism are not preserved so bitwise equivalence is not possible
