@@ -1,6 +1,10 @@
 # dicomweb-archive-direct
 Specification for a DICOMweb based archive format
 
+# Status
+
+Collecting feedback - please provide by filing a [github issue](https://github.com/chafey/dicomweb-archive-direct/issues/new)
+
 # Introduction
 
 DICOM currently has a single on disk file format defined in P10 of the standard.  P10 was created to enable interoperability at the physical media level - specifically CD, DVD and USB sticks.  It is often used as an archive format as it is the only on standard on disk format but suffers from a number of issues when used this way (see below).  With the introduction of
@@ -51,3 +55,12 @@ NOTE: Semantically equivalent DICOM P10 can be generated from the above resource
 
 ### Q: What does a semantically equivalent DICOM P10 file mean?
 ### A: Parsing the generated DICOM P10 file will return the exact same values, but the actual bits may be different due to variations in DICOM P10 encoding formats (e.g. undefined length sequences).  The details of the encoding mechanism are not preserved so bitwise equivalence is not possible
+
+# References
+
+* [dicomweb-dump](https://github.com/chafey/dicomweb-dump) - tool that dumps DICOMweb responses to disk
+* [dicomp10-to-dicomweb](https://github.com/chafey/dicomp10-to-dicomweb-js) - library to generate DICOMweb responses from DICOM P10
+
+# TODO
+
+* Create example of study in DICOM P10 format and DICOMweb Archive Direct format
