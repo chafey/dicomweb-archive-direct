@@ -4,7 +4,7 @@ Specification for a DICOMweb based archive format
 # Introduction
 
 DICOM currently has a single on disk file format defined in P10 of the standard.  P10 was created to enable interoperability at the physical media level - specifically CD, DVD and USB sticks.  It is often used as an archive format as it is the only on standard on disk format but suffers from a number of issues when used this way (see below).  With the introduction of
-DICOMweb, it makes sense to explore a modern archive format that is addresses the issues with P10 and is more web and cloud friendly.
+DICOMweb, it makes sense to explore a modern archive format that addresses the issues with DICOM P10 and is more web and cloud friendly.
 
 # Challenges with DICOM P10 as an archive format
 
@@ -20,11 +20,12 @@ as private tags and standard tags that can be more than one VR (e.g. LUT Data)
 
 Compliant archives will provide direct HTTP GET access to the following DICOMweb resources:
 
-* Study Metadata - in DICOM JSON encoding, gzipped
+* Study Metadata - in DICOM JSON encoding with VRs included (Explicit format), gzipped.  
 * Image Frames - in any supported transfer sytnax, wrapped in multi-part mime header
 * Bulk Data - wrapped in multi-part mime header
 
-The above resources will be returned without any modification (e.g. no transcoding to another transfer syntax or encoding format)
+The archive will provide direct access to the above resources - either via HTTP GET or by reading the file system directly.  The direct archive mechanism will not support any
+on the fly modification of the data (e.g. no transcoding to another transfer syntax or encoding)
 
 An entire study can be archived as a single file by storing all of the above resources in a single ZIP file.  The resources will use file paths
 that match the WADO-RS URIs
